@@ -19,11 +19,7 @@ public class primsMST {
 		System.out.print("Enter number of Vertices: ");
 		int V = sc.nextInt();
 
-		// Validate vertex count
-		if (V <= 0) {
-			System.out.println("Number of vertices must be greater than 0.");
-			return;
-		}
+
 
 		System.out.print("Enter number of Edges: ");
 		int E = sc.nextInt();
@@ -41,12 +37,7 @@ public class primsMST {
 			int v = sc.nextInt();
 			int w = sc.nextInt();
 
-			// Validate edge input
-			if (u < 0 || u >= V || v < 0 || v >= V) {
-				System.out.println("Invalid vertex number. Please enter vertices between 0 and " + (V - 1));
-				i--; // retry this edge
-				continue;
-			}
+
 
 			// Add edge to both source and destination (undirected graph)
 			adj.get(u).add(new Edge(v, w));
