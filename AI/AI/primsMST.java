@@ -76,6 +76,7 @@ public class primsMST {
 					pq.offer(new Edge(neighbor.vertex, neighbor.weight));
 				}
 			}
+
 		}
 
 		System.out.println("Minimum Spanning Tree Cost: " + mstCost);
