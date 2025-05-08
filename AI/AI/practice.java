@@ -2,20 +2,21 @@ package AI;
 import java.util.*;
 
 public class practice{
+
 	Map<Integer, List<Integer>> graph = new HashMap<>();
 
 	public void addEdge(int u, int v){
-		graph.computeIfAbsent(u, k-> new ArrayList<>()).add(v);
-		graph.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+		graph.computeIfAbsent(u,k -> new ArrayList<>).add(v);
+		graph.computeIfAbsent(v,k-> new ArrayList<>()).add(u);
 	}
 
 	public void dfs(int node, Set<Integer> visited){
 		visited.add(node);
-		System.out.println(node+" ");
+		System.out.println(node);
 
-		for (int neighbour : graph.getOrDefault(node, new ArrayList<>())){
+		for(int neighbour : graph.getOrDefault(node, new ArrayList<>())){
 			if(!visited.contains(neighbour)){
-				dfs(neighbour, visited);
+				dfs(neighbour,visited);
 			}
 		}
 	}
@@ -33,19 +34,23 @@ public class practice{
 
 		visited.add(startnode);
 		queue.offer(startnode);
-		System.out.println("BFS:");
+
+		System.out.println("BFS traversal:");
 
 		while(!queue.isEmpty()){
 			int current = queue.poll();
-			System.out.println(current + " ");
-			for(int neighbour : graph.getOrDefault(current , new ArrayList<>())){
-				if((!visited.contains(neighbour))){
+			System.out.println(current+" ");
+
+
+			for(int neighbour : graph.getOrDefault(current, new ArrayList<>())){
+				if(!visited.contains(neighbour)){
 					visited.add(neighbour);
 					queue.offer(neighbour);
 				}
 			}
-			System.out.println();
 		}
 	}
 
 }
+
+
