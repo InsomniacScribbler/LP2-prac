@@ -1,43 +1,37 @@
 package AI;
 import java.util.*;
- class Processs{
-	int pid, bt;
-	Processs(int pid,int bt){
-		this.pid = pid;
-		this.bt= bt;
-	}
-}
 public class practice{
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-
-		int np = sc.nextInt();
-
-		Processs[] processes = new Processs[np];
-
-		for (int i = 0; i < np; i++) {
-			int pid = sc.nextInt();
-			int bt = sc.nextInt();
-
-			processes[i] = new Processs(pid,bt);
+	static class Edge{
+		int vertex, weight;
+		Edge(int v, int w){
+			vertex = v;
+			weight = w;
 
 		}
-
-		Arrays.sort(processes,Comparator.comparingInt(p->p.bt));
-
-		int[] wt = new int[np];
-		int[] tat = new int[np];
-
-		for(int i = 1 ; i < np ; i++){
-			wt[i] = wt[i-1]+ processes[i-1].bt;
-		}
-		for(int i = 0; i<np; i++){
-			tat[i] = processes[i].bt+ wt[i];
-		}
-
 	}
 
+	public static void dijkstra(List<List<Edge>> adj, int source, int V){
+		int[] dist = new int[V];
+		Arrays.fill(dist, Integer.MAX_VALUE);
+		dist[source] = 0;
 
+		PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparingInt(e->e.weight));
+		pq.offer(new Edge(source, 0));
+
+		while(!pq.isEmpty()){
+			Edge curr = pq.poll();
+			int u = curr.vertex;
+			for(Edge neighbour : adj.get(u)){
+				int v = neighbour.vertex;
+				int w = neighbour.weight;
+
+				if(dist[u] + w < dist[v]){
+					dist[v] = dist[u] + w;
+					pq.offer(new Edge(v,dist[v]));
+				}
+			}
+		}
+	}
 }
 
 
