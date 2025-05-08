@@ -1,59 +1,51 @@
 package AI;
-
 import java.util.*;
 
-public class practice {
-	static class Edge{
-		int vertex, weight;
-		Edge(int v, int w){
-			this.vertex = v;
-			this.weight = w;
+public class practice{
+	Map<Integer, List<Integer>> graph = new HashMap<>();
+
+	public void addEdge(int u, int v){
+		graph.computeIfAbsent(u, k-> new ArrayList<>()).add(v);
+		graph.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+	}
+
+	public void dfs(int node, Set<Integer> visited){
+		visited.add(node);
+		System.out.println(node+" ");
+
+		for (int neighbour : graph.getOrDefault(node, new ArrayList<>())){
+			if(!visited.contains(neighbour)){
+				dfs(neighbour, visited);
+			}
 		}
 	}
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		List<List<Edge>> adj = new ArrayList<>();
-		System.out.println("Enter the no of vertices:");
-		int V = sc.nextInt();
-		for(int i=0; i<V;i++){
-			adj.add(new ArrayList<>());
-		}
-		System.out.println("Enter the no of edges:");
-		int E = sc.nextInt();
+	public void startDFS(int startnode){
+		Set<Integer> visited = new HashSet<>();
+		System.out.println("DFS:");
+		dfs(startnode,visited);
+		System.out.println();
+	}
 
-		for(int i = 0 ; i<E; i++){
-			int u = sc.nextInt();
-			int v = sc.nextInt();
-			int w = sc.nextInt();
+	public void startBFS(int startnode){
+		Set<Integer> visited = new HashSet<>();
+		Queue<Integer> queue = new LinkedList<>();
 
-			adj.get(u).add(new Edge(v,w));
-			adj.get(u).add(new Edge(u,w));
-		}
+		visited.add(startnode);
+		queue.offer(startnode);
+		System.out.println("BFS:");
 
-		boolean [] visited = new boolean[V];
-		PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparingInt(e ->e.weight)) ;
-		int mstcost = 0;
-
-		pq.offer(new Edge(0,0));
-
-		while(!pq.isEmpty()){
-			Edge current = pq.poll();
-			int  u = current.vertex;
-			int w = current.weight;
-
-			if(visited[u]) continue;
-
-			visited[u] = true;
-			mstcost+=w;
-
-			for(Edge neighbour : adj.get(u)){
-				if(!visited[neighbour.vertex]){
-					pq.offer(new Edge(neighbour.vertex, neighbour.weight));
+		while(!queue.isEmpty()){
+			int current = queue.poll();
+			System.out.println(current + " ");
+			for(int neighbour : graph.getOrDefault(current , new ArrayList<>())){
+				if((!visited.contains(neighbour))){
+					visited.add(neighbour);
+					queue.offer(neighbour);
 				}
 			}
+			System.out.println();
 		}
-
 	}
 
 }
